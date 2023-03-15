@@ -23,4 +23,8 @@ public class TextConstants {
     public static final String nice = "Очень приятно, ";
     public static final String go = "Начинаем!";
     public static final String out = "Нет, я передумал";
+    public static final String warning30 = "Осталось 30 секунд";
+    public static final String warning15 = "Осталось 15 секунд";
+    public static final String warning5 = "Осталось 5 секунд!";
+    public static final String timeOut = "Время вышло!";
 }

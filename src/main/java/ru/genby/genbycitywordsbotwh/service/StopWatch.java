@@ -3,6 +3,7 @@ package ru.genby.genbycitywordsbotwh.service;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import ru.genby.genbycitywordsbotwh.CityWordsBot;
+import ru.genby.genbycitywordsbotwh.constants.TextConstants;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,13 +23,13 @@ public class StopWatch {
             elapsedTime = elapsedTime + 1000;
 
             if (elapsedTime == 30000) {
-                cityWordsBot.sendMessage(chatId, "Осталось 30 секунд");
+                cityWordsBot.sendMessage(chatId, TextConstants.warning30);
             } else if (elapsedTime == 45000) {
-                cityWordsBot.sendMessage(chatId, "Осталось 15 секунд");
+                cityWordsBot.sendMessage(chatId, TextConstants.warning15);
             } else if (elapsedTime == 55000) {
-                cityWordsBot.sendMessage(chatId, "Осталось 5 секунд!");
+                cityWordsBot.sendMessage(chatId, TextConstants.warning5);
             } else if (elapsedTime == 60000) {
-                cityWordsBot.sendMessage(chatId, "Время вышло!");
+                cityWordsBot.sendMessage(chatId, TextConstants.timeOut);
                 overTime = true;
             }
         }
