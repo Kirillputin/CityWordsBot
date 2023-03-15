@@ -1,25 +1,23 @@
 package ru.genby.genbycitywordsbotwh.handlers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.genby.genbycitywordsbotwh.bot_api.BotState;
 import ru.genby.genbycitywordsbotwh.bot_api.InputMessageHandler;
 import ru.genby.genbycitywordsbotwh.cache.UserDataCache;
+import ru.genby.genbycitywordsbotwh.constants.TextConstants;
 import ru.genby.genbycitywordsbotwh.model.UserProfileData;
 import ru.genby.genbycitywordsbotwh.service.UserProfileServiceImp;
 
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class ScopeHandler implements InputMessageHandler {
     private final UserDataCache userDataCache;
     private final UserProfileServiceImp userProfileServiceImp;
-
-    public ScopeHandler(UserDataCache userDataCache, UserProfileServiceImp userProfileServiceImp) {
-        this.userDataCache = userDataCache;
-        this.userProfileServiceImp = userProfileServiceImp;
-    }
 
     @Override
     public SendMessage handle(Message message) {
@@ -37,7 +35,7 @@ public class ScopeHandler implements InputMessageHandler {
 
         List<UserProfileData> userProfileData = userProfileServiceImp.findOrderedBySeatNumberLimitedTo(10);
 
-        StringBuilder message = new StringBuilder("Таблица лидеров: ");
+        StringBuilder message = new StringBuilder(TextConstants.tableLeaders);
         int numb = 0;
 
         for (UserProfileData profile : userProfileData

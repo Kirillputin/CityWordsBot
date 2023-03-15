@@ -1,5 +1,6 @@
 package ru.genby.genbycitywordsbotwh.handlers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -8,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import ru.genby.genbycitywordsbotwh.bot_api.BotState;
 import ru.genby.genbycitywordsbotwh.bot_api.InputMessageHandler;
 import ru.genby.genbycitywordsbotwh.cache.UserDataCache;
+import ru.genby.genbycitywordsbotwh.constants.TextConstants;
 import ru.genby.genbycitywordsbotwh.model.UserProfileData;
 import ru.genby.genbycitywordsbotwh.service.ReplyMessagesService;
 
@@ -15,15 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class FillingProfileHandler implements InputMessageHandler {
-
     private final UserDataCache userDataCache;
     private final ReplyMessagesService messagesService;
-
-    public FillingProfileHandler(UserDataCache userDataCache, ReplyMessagesService messagesService) {
-        this.userDataCache = userDataCache;
-        this.messagesService = messagesService;
-    }
 
     @Override
     public SendMessage handle(Message message) {
@@ -58,7 +55,7 @@ public class FillingProfileHandler implements InputMessageHandler {
             profileData.setScope(0);
             userDataCache.saveUserProfileData(chatId, profileData);
 
-            replyToUser = new SendMessage((String.valueOf(chatId)), "Очень приятно, " + usersAnswer + "." +
+            replyToUser = new SendMessage((String.valueOf(chatId)), TextConstants.nice + usersAnswer + "." +
                     "\n" + messagesService.getReplyText("reply.StartGame"));
 
             replyToUser.setReplyMarkup(getInlineMessageButtons());
@@ -70,12 +67,12 @@ public class FillingProfileHandler implements InputMessageHandler {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         InlineKeyboardButton buttonYes = new InlineKeyboardButton();
-        buttonYes.setText("Начинаем!");
+        buttonYes.setText(TextConstants.go);
         InlineKeyboardButton buttonNo = new InlineKeyboardButton();
-        buttonNo.setText("Нет, я передумал");
+        buttonNo.setText(TextConstants.out);
 
-        buttonYes.setCallbackData("buttonYes");
-        buttonNo.setCallbackData("buttonNo");
+        buttonYes.setCallbackData(TextConstants.buttonYes);
+        buttonNo.setCallbackData(TextConstants.buttonNo);
 
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
         keyboardButtonsRow1.add(buttonYes);

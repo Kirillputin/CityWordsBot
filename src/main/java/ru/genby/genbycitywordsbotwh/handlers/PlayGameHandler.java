@@ -1,5 +1,6 @@
 package ru.genby.genbycitywordsbotwh.handlers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -14,22 +15,13 @@ import ru.genby.genbycitywordsbotwh.utils.Letter;
 import java.util.Optional;
 
 @Component
+@AllArgsConstructor
 public class PlayGameHandler implements InputMessageHandler {
-
     private final ReplyMessagesService messagesService;
     private final UserDataCache userDataCache;
-    private final CityServiceImp cityServiceImp;
-    private final WordExceptionServiceImp wordExceptionServiceImp;
+    private final CityService cityServiceImp;
+    private final WordExceptionService wordExceptionServiceImp;
     private final StopWatch stopWatch;
-
-
-    public PlayGameHandler(ReplyMessagesService messagesService, UserDataCache userDataCache, CityServiceImp cityServiceImp, WordExceptionServiceImp wordExceptionServiceImp, StopWatch stopWatch) {
-        this.messagesService = messagesService;
-        this.userDataCache = userDataCache;
-        this.cityServiceImp = cityServiceImp;
-        this.wordExceptionServiceImp = wordExceptionServiceImp;
-        this.stopWatch = stopWatch;
-    }
 
     @Override
     public SendMessage handle(Message message) {

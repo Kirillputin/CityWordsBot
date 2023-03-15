@@ -1,5 +1,6 @@
 package ru.genby.genbycitywordsbotwh.Buttons;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
@@ -10,19 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class MenuKeyboard {
     private final ReplyMessagesService messagesService;
-
-    public MenuKeyboard(ReplyMessagesService messagesService) {
-        this.messagesService = messagesService;
-    }
 
     public ReplyKeyboardMarkup getEndMenuKeyboard() {
 
         final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);//?? за что отвечает
 
         List<KeyboardRow> keyboard = new ArrayList<>();
 
@@ -35,12 +33,7 @@ public class MenuKeyboard {
     }
 
     public ReplyKeyboardMarkup getMainMenuKeyboard() {
-        final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-//        replyKeyboardMarkup.setOneTimeKeyboard(false);
-        replyKeyboardMarkup.setOneTimeKeyboard(true);
-
+        ReplyKeyboardMarkup replyKeyboardMarkup = getKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();
 
         KeyboardRow row1 = new KeyboardRow();
@@ -57,11 +50,7 @@ public class MenuKeyboard {
     }
 
     public ReplyKeyboardMarkup getConformKeyboard() {
-        final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(true);
-
+        ReplyKeyboardMarkup replyKeyboardMarkup = getKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();
 
         KeyboardRow row1 = new KeyboardRow();
@@ -77,4 +66,11 @@ public class MenuKeyboard {
         return replyKeyboardMarkup;
     }
 
+    private ReplyKeyboardMarkup getKeyboardMarkup() {
+        final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
+        return replyKeyboardMarkup;
+    }
 }

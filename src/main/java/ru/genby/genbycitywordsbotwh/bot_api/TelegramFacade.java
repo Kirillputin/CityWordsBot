@@ -1,5 +1,6 @@
 package ru.genby.genbycitywordsbotwh.bot_api;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
@@ -9,21 +10,16 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.genby.genbycitywordsbotwh.cache.UserDataCache;
+import ru.genby.genbycitywordsbotwh.constants.TextConstants;
 import ru.genby.genbycitywordsbotwh.service.ReplyMessagesService;
 
 @Component
 @Slf4j
+@AllArgsConstructor
 public class TelegramFacade {
     private final BotStateContext botStateContext;
     private final UserDataCache userDataCache;
     private final ReplyMessagesService messagesService;
-
-    public TelegramFacade(BotStateContext botStateContext, UserDataCache userDataCache,
-                          ReplyMessagesService messagesService) {
-        this.botStateContext = botStateContext;
-        this.userDataCache = userDataCache;
-        this.messagesService = messagesService;
-    }
 
     public BotApiMethod<?> handleUpdate(Update update) {
         SendMessage replyMessage = null;
@@ -51,20 +47,20 @@ public class TelegramFacade {
         SendMessage replyMessage;
 
         switch (inputMsg) {
-            case "/start":
+            case TextConstants.start:
                 botState = BotState.START;
                 break;
-            case "Да, хочу!": //Спросить про выражения
+            case TextConstants.yesWant:
                 botState = BotState.FILLING_PROFILE;
                 break;
-            case "Нет, спасибо":
+            case TextConstants.noWant:
                 return messagesService.getReplyMessage(chatId, "reply.cancel");
-            case "Закончить игру":
+            case TextConstants.endGame:
                 botState = BotState.END_GAME;
                 break;
-            case "Правила игры":
+            case TextConstants.rules:
                 return messagesService.getReplyMessage(chatId, "reply.helpText");
-            case "Лидеры":
+            case TextConstants.leaders:
                 botState = BotState.SCOPE;
                 break;
             default:
@@ -88,11 +84,11 @@ public class TelegramFacade {
             return messagesService.getReplyMessage(chatId, "reply.error");
         }
 
-        if (buttonQuery.getData().equals("buttonYes")) {
+        if (buttonQuery.getData().equals(TextConstants.buttonYes)) {
             userDataCache.setUsersCurrentBotState(chatId, BotState.START_GAME);
             callBackAnswer = botStateContext.processInputMessage(userDataCache.getUsersCurrentBotState(chatId), buttonQuery.getMessage());
 
-        } else if (buttonQuery.getData().equals("buttonNo")) {
+        } else if (buttonQuery.getData().equals(TextConstants.buttonNo)) {
             callBackAnswer = sendAnswerCallbackQuery(messagesService.getReplyText("reply.cancel"), false, buttonQuery);
         }
 

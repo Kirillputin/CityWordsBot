@@ -1,5 +1,6 @@
 package ru.genby.genbycitywordsbotwh.handlers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -7,28 +8,16 @@ import ru.genby.genbycitywordsbotwh.Buttons.MenuKeyboard;
 import ru.genby.genbycitywordsbotwh.bot_api.BotState;
 import ru.genby.genbycitywordsbotwh.bot_api.InputMessageHandler;
 import ru.genby.genbycitywordsbotwh.cache.UserDataCache;
-import ru.genby.genbycitywordsbotwh.service.ReplyMessagesService;
-import ru.genby.genbycitywordsbotwh.service.StopWatch;
-import ru.genby.genbycitywordsbotwh.service.UserProfileServiceImp;
-import ru.genby.genbycitywordsbotwh.service.WordExceptionServiceImp;
+import ru.genby.genbycitywordsbotwh.constants.TextConstants;
+import ru.genby.genbycitywordsbotwh.service.*;
 
 @Component
+@AllArgsConstructor
 public class EndGameHandler implements InputMessageHandler {
     private final MenuKeyboard menuKeyboard;
     private final ReplyMessagesService messagesService;
-    private final UserProfileServiceImp userProfileServiceImp;
-    private final WordExceptionServiceImp wordExceptionServiceImp;
     private final UserDataCache userDataCache;
-    private final StopWatch stopWatch;
-
-    public EndGameHandler(MenuKeyboard menuKeyboard, ReplyMessagesService messagesService, UserProfileServiceImp userProfileServiceImp, WordExceptionServiceImp wordExceptionServiceImp, UserDataCache userDataCache, StopWatch stopWatch) {
-        this.menuKeyboard = menuKeyboard;
-        this.messagesService = messagesService;
-        this.userProfileServiceImp = userProfileServiceImp;
-        this.wordExceptionServiceImp = wordExceptionServiceImp;
-        this.userDataCache = userDataCache;
-        this.stopWatch = stopWatch;
-    }
+    private final EndHandler endHandler;
 
     @Override
     public SendMessage handle(Message message) {
@@ -58,15 +47,15 @@ public class EndGameHandler implements InputMessageHandler {
 
         if (botState.equals(BotState.ANS_END)) {
             switch (message) {
-                case "Да" -> {
+                case TextConstants.yes -> {
                     botState = BotState.END;
                     userDataCache.setUsersCurrentBotState(chatId, botState);
-                    replyToUser = new EndHandler(menuKeyboard, messagesService, userProfileServiceImp, wordExceptionServiceImp, userDataCache, stopWatch).handle(inputMsg);
+                    replyToUser = endHandler.handle(inputMsg);
                 }
-                case "Нет" -> {
+                case TextConstants.no -> {
                     userDataCache.setUsersCurrentBotState(chatId, BotState.GAME);
-                    replyToUser = new SendMessage((String.valueOf(chatId)), "Отлично, продолжаем!"
-                            + "\n" + "Вам на: " + "'" + userDataCache.getUserLetterData(chatId) + "'");
+                    replyToUser = new SendMessage((String.valueOf(chatId)), TextConstants.continues
+                            + "\n" + TextConstants.youTo + "'" + userDataCache.getUserLetterData(chatId) + "'");
                     replyToUser.setReplyMarkup(menuKeyboard.getEndMenuKeyboard());
                 }
                 default -> replyToUser = messagesService.getReplyMessage(chatId, "reply.error");

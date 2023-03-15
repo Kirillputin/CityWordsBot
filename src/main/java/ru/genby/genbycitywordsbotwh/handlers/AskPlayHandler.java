@@ -1,5 +1,6 @@
 package ru.genby.genbycitywordsbotwh.handlers;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -11,14 +12,10 @@ import ru.genby.genbycitywordsbotwh.service.ReplyMessagesService;
 
 @Slf4j
 @Component
+@AllArgsConstructor
 public class AskPlayHandler implements InputMessageHandler {
     private final ReplyMessagesService messagesService;
     private final MenuKeyboard menuKeyboard;
-
-    public AskPlayHandler(ReplyMessagesService messagesService, MenuKeyboard menuKeyboard) {
-        this.messagesService = messagesService;
-        this.menuKeyboard = menuKeyboard;
-    }
 
     @Override
     public SendMessage handle(Message message) {

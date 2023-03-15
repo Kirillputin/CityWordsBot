@@ -7,14 +7,11 @@ public class Letter {
 
     public static String getCurrLastLetter(@NotNull String currCity) {
         String currLastLetterCity = String.valueOf(currCity.toUpperCase().charAt(currCity.length() - 1));
+        int i = 1;
 
-        if (exceptAlphabet.contains(currLastLetterCity)) {
-            currLastLetterCity = String.valueOf(currCity.toUpperCase().charAt(currCity.length() - 2));
-
-            //Исключим "Ы"
-            if (exceptAlphabet.contains(currLastLetterCity)) {//сделать в вайле
-                currLastLetterCity = String.valueOf(currCity.toUpperCase().charAt(currCity.length() - 3));
-            }
+        while (exceptAlphabet.contains(currLastLetterCity)) {
+            i++;
+            currLastLetterCity = String.valueOf(currCity.toUpperCase().charAt(currCity.length() - i));
         }
         return currLastLetterCity;
     }
