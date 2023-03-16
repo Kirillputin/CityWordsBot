@@ -2,7 +2,7 @@ package ru.genby.genbycitywordsbotwh.utils;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Letter {
+public final class Letter {
     private static final String exceptAlphabet = "ЁЙЪЫЬ";
 
     public static String getCurrLastLetter(@NotNull String currCity) {
