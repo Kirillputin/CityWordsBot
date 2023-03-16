@@ -11,7 +11,6 @@ import java.util.Map;
 public class UserDataCache implements DataCache {
     private Map<Long, BotState> usersBotStates = new HashMap<>();
     private Map<Long, UserProfileData> usersProfileData = new HashMap<>();
-
     private Map<Long, String> usersLetterData = new HashMap<>();
 
     @Override
