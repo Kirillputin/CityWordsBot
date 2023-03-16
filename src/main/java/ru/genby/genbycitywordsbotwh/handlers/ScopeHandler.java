@@ -9,7 +9,7 @@ import ru.genby.genbycitywordsbotwh.bot_api.InputMessageHandler;
 import ru.genby.genbycitywordsbotwh.cache.UserDataCache;
 import ru.genby.genbycitywordsbotwh.constants.TextConstants;
 import ru.genby.genbycitywordsbotwh.model.UserProfileData;
-import ru.genby.genbycitywordsbotwh.service.UserProfileServiceImp;
+import ru.genby.genbycitywordsbotwh.service.UserProfileService;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ScopeHandler implements InputMessageHandler {
     private final UserDataCache userDataCache;
-    private final UserProfileServiceImp userProfileServiceImp;
+    private final UserProfileService userProfileService;
 
     @Override
     public SendMessage handle(Message message) {
@@ -33,7 +33,7 @@ public class ScopeHandler implements InputMessageHandler {
         long chatId = inputMsg.getChatId();
         SendMessage replyToUser;
 
-        List<UserProfileData> userProfileData = userProfileServiceImp.findOrderedBySeatNumberLimitedTo(10);
+        List<UserProfileData> userProfileData = userProfileService.findOrderedBySeatNumberLimitedTo(10);
 
         StringBuilder message = new StringBuilder(TextConstants.tableLeaders);
         int numb = 0;

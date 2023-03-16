@@ -10,12 +10,12 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
-@Repository
+//@Repository
 public class UserProfileServiceImp implements UserProfileService {
-    private UserProfileRepository userProfileRepository;
+    private final UserProfileRepository userProfileRepository;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+//    @PersistenceContext
+//    private EntityManager entityManager;
 
     public UserProfileServiceImp(UserProfileRepository userProfileRepository) {
         this.userProfileRepository = userProfileRepository;
@@ -27,7 +27,6 @@ public class UserProfileServiceImp implements UserProfileService {
     }
 
     public List<UserProfileData> findOrderedBySeatNumberLimitedTo(int limit) {
-        return entityManager.createQuery("SELECT user FROM UserProfileData user ORDER BY user.scope DESC ",
-                UserProfileData.class).setMaxResults(limit).getResultList();
+        return userProfileRepository.findOrderedBySeatNumberLimitedTo(limit);
     }
 }
