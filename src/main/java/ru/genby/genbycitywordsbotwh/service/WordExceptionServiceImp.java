@@ -23,7 +23,7 @@ public class WordExceptionServiceImp implements WordExceptionService {
     }
 
     @Override
-    @Transactional //СОХРАНИТЬ-УДАЛИТЬ-АБДЕЙТ ТРАНЗАКЦИОННЫЕ!!
+    @Transactional
     public void deleteByName(String name) {
         wordExceptionRepository.deleteWordExceptionByName(name.trim());
     }

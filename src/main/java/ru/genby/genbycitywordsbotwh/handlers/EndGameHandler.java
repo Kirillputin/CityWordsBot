@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.genby.genbycitywordsbotwh.Buttons.MenuKeyboard;
+import ru.genby.genbycitywordsbotwh.buttons.MenuKeyboard;
 import ru.genby.genbycitywordsbotwh.bot_api.BotState;
 import ru.genby.genbycitywordsbotwh.bot_api.InputMessageHandler;
 import ru.genby.genbycitywordsbotwh.cache.UserDataCache;

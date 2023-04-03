@@ -10,7 +10,7 @@ import ru.genby.genbycitywordsbotwh.bot_api.BotState;
 import ru.genby.genbycitywordsbotwh.bot_api.InputMessageHandler;
 import ru.genby.genbycitywordsbotwh.cache.UserDataCache;
 import ru.genby.genbycitywordsbotwh.constants.TextConstants;
-import ru.genby.genbycitywordsbotwh.model.UserProfileData;
+import ru.genby.genbycitywordsbotwh.model.UserProfileEntity;
 import ru.genby.genbycitywordsbotwh.service.ReplyMessagesService;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class FillingProfileHandler implements InputMessageHandler {
         String usersAnswer = inputMsg.getText();
         long chatId = inputMsg.getChatId();
 
-        UserProfileData profileData = userDataCache.getUserProfileData(chatId);
+        UserProfileEntity profileData = userDataCache.getUserProfileData(chatId);
         BotState botState = userDataCache.getUsersCurrentBotState(chatId);
 
         SendMessage replyToUser = null;

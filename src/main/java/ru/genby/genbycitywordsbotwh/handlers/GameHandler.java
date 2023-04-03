@@ -4,15 +4,17 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.genby.genbycitywordsbotwh.Buttons.MenuKeyboard;
+import ru.genby.genbycitywordsbotwh.buttons.MenuKeyboard;
 import ru.genby.genbycitywordsbotwh.bot_api.BotState;
 import ru.genby.genbycitywordsbotwh.bot_api.InputMessageHandler;
 import ru.genby.genbycitywordsbotwh.cache.UserDataCache;
 import ru.genby.genbycitywordsbotwh.constants.TextConstants;
 import ru.genby.genbycitywordsbotwh.model.City;
-import ru.genby.genbycitywordsbotwh.model.UserProfileData;
+import ru.genby.genbycitywordsbotwh.model.UserProfileEntity;
 import ru.genby.genbycitywordsbotwh.model.WordException;
-import ru.genby.genbycitywordsbotwh.service.*;
+import ru.genby.genbycitywordsbotwh.service.CityService;
+import ru.genby.genbycitywordsbotwh.service.StopWatch;
+import ru.genby.genbycitywordsbotwh.service.WordExceptionService;
 import ru.genby.genbycitywordsbotwh.utils.Letter;
 
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ public class GameHandler implements InputMessageHandler {
         }
 
         String inputCity = inputMsg.getText();
-        UserProfileData ProfileData = userDataCache.getUserProfileData(chatId);
+        UserProfileEntity ProfileData = userDataCache.getUserProfileData(chatId);
         Integer scope = ProfileData.getScope();
 
         userDataCache.setUsersCurrentBotState(chatId, BotState.GAME);
@@ -84,7 +86,7 @@ public class GameHandler implements InputMessageHandler {
 
     private SendMessage processNextCity(Message inputMsg) {
         long chatId = inputMsg.getChatId();
-        UserProfileData ProfileData = userDataCache.getUserProfileData(chatId);
+        UserProfileEntity ProfileData = userDataCache.getUserProfileData(chatId);
         Integer scope = ProfileData.getScope();
         String inputCity = inputMsg.getText();
         String currLastLetterCity;

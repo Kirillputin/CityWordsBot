@@ -2,7 +2,7 @@ package ru.genby.genbycitywordsbotwh.cache;
 
 import org.springframework.stereotype.Component;
 import ru.genby.genbycitywordsbotwh.bot_api.BotState;
-import ru.genby.genbycitywordsbotwh.model.UserProfileData;
+import ru.genby.genbycitywordsbotwh.model.UserProfileEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
 @Component
 public class UserDataCache implements DataCache {
     private Map<Long, BotState> usersBotStates = new HashMap<>();
-    private Map<Long, UserProfileData> usersProfileData = new HashMap<>();
+    private Map<Long, UserProfileEntity> usersProfileData = new HashMap<>();
     private Map<Long, String> usersLetterData = new HashMap<>();
 
     @Override
@@ -29,17 +29,17 @@ public class UserDataCache implements DataCache {
     }
 
     @Override
-    public UserProfileData getUserProfileData(Long userId) {
-        UserProfileData userProfileData = usersProfileData.get(userId);
-        if (userProfileData == null) {
-            userProfileData = new UserProfileData();
+    public UserProfileEntity getUserProfileData(Long userId) {
+        UserProfileEntity userProfileEntity = usersProfileData.get(userId);
+        if (userProfileEntity == null) {
+            userProfileEntity = new UserProfileEntity();
         }
-        return userProfileData;
+        return userProfileEntity;
     }
 
     @Override
-    public void saveUserProfileData(Long userId, UserProfileData userProfileData) {
-        usersProfileData.put(userId, userProfileData);
+    public void saveUserProfileData(Long userId, UserProfileEntity userProfileEntity) {
+        usersProfileData.put(userId, userProfileEntity);
     }
 
     @Override

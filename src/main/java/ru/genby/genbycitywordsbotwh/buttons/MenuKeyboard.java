@@ -1,10 +1,11 @@
-package ru.genby.genbycitywordsbotwh.Buttons;
+package ru.genby.genbycitywordsbotwh.buttons;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import ru.genby.genbycitywordsbotwh.constants.TextConstants;
 import ru.genby.genbycitywordsbotwh.service.ReplyMessagesService;
 
 import java.util.ArrayList;
@@ -20,13 +21,13 @@ public class MenuKeyboard {
         final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);//?? за что отвечает
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
 
         List<KeyboardRow> keyboard = new ArrayList<>();
 
         KeyboardRow row1 = new KeyboardRow();
 
-        row1.add(new KeyboardButton("Закончить игру"));
+        row1.add(new KeyboardButton(TextConstants.endGame));
         keyboard.add(row1);
         replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;

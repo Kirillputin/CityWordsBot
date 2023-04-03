@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.genby.genbycitywordsbotwh.Buttons.MenuKeyboard;
+import ru.genby.genbycitywordsbotwh.buttons.MenuKeyboard;
 import ru.genby.genbycitywordsbotwh.bot_api.BotState;
 import ru.genby.genbycitywordsbotwh.bot_api.InputMessageHandler;
 import ru.genby.genbycitywordsbotwh.cache.UserDataCache;
 import ru.genby.genbycitywordsbotwh.constants.TextConstants;
-import ru.genby.genbycitywordsbotwh.model.UserProfileData;
+import ru.genby.genbycitywordsbotwh.model.UserProfileEntity;
 import ru.genby.genbycitywordsbotwh.service.*;
 
 @Component
@@ -18,7 +18,7 @@ public class EndHandler implements InputMessageHandler {
 
     private final MenuKeyboard menuKeyboard;
     private final ReplyMessagesService messagesService;
-    private final UserProfileService userProfileServiceImp;
+    private final CustomUserProfileRepo userProfileServiceImp;
     private final WordExceptionService wordExceptionServiceImp;
     private final UserDataCache userDataCache;
     private final StopWatch stopWatch;
@@ -39,7 +39,7 @@ public class EndHandler implements InputMessageHandler {
 
         stopWatch.stop();
 
-        UserProfileData profileData = userDataCache.getUserProfileData(chatId);
+        UserProfileEntity profileData = userDataCache.getUserProfileData(chatId);
         userDataCache.setUsersCurrentBotState(chatId, BotState.START);
         wordExceptionServiceImp.deleteByName(profileData.getName());
         userProfileServiceImp.save(profileData);

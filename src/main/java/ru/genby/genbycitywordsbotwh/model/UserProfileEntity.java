@@ -1,12 +1,17 @@
 package ru.genby.genbycitywordsbotwh.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
 @Table(name = "user_profile")
 
-public class UserProfileData {
+public class UserProfileEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +21,7 @@ public class UserProfileData {
     @Column(name = "scope")
     Integer scope;
 
-    public UserProfileData() {
+    public UserProfileEntity() {
     }
 
     public String getName() {
@@ -39,7 +44,7 @@ public class UserProfileData {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserProfileData that = (UserProfileData) o;
+        UserProfileEntity that = (UserProfileEntity) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(scope, that.scope);
     }
 
