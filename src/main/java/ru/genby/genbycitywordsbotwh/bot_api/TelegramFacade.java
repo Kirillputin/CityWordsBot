@@ -52,20 +52,16 @@ public class TelegramFacade {
     }
 
     private SendMessage handleInputMessage(Message message) {
-        String inputMsg = message.getText();
         long chatId = message.getChatId();
         BotState botState;
-        SendMessage replyMessage;
 
-        botState = caseHandlers.get(inputMsg);
+        botState = caseHandlers.get(message.getText());
         if (botState == null) {
             botState = userDataCache.getUsersCurrentBotState(chatId);
         }
 
         userDataCache.setUsersCurrentBotState(chatId, botState);
-
-        replyMessage = botStateContext.processInputMessage(botState, message);
-        return replyMessage;
+        return botStateContext.processInputMessage(botState, message);
     }
 
     private BotApiMethod<?> processCallbackQuery(CallbackQuery buttonQuery) {
@@ -83,16 +79,16 @@ public class TelegramFacade {
             callBackAnswer = botStateContext.processInputMessage(userDataCache.getUsersCurrentBotState(chatId), buttonQuery.getMessage());
 
         } else if (buttonQuery.getData().equals(TextConstants.buttonNo)) {
-            callBackAnswer = sendAnswerCallbackQuery(messagesService.getReplyText("reply.cancel"), false, buttonQuery);
+            callBackAnswer = sendAnswerCallbackQuery(messagesService.getReplyText("reply.cancel"), buttonQuery);
         }
 
         return callBackAnswer;
     }
 
-    private AnswerCallbackQuery sendAnswerCallbackQuery(String text, boolean alert, CallbackQuery callbackquery) {
+    private AnswerCallbackQuery sendAnswerCallbackQuery(String text, CallbackQuery callbackquery) {
         AnswerCallbackQuery answerCallbackQuery = new AnswerCallbackQuery();
         answerCallbackQuery.setCallbackQueryId(callbackquery.getId());
-        answerCallbackQuery.setShowAlert(alert);
+        answerCallbackQuery.setShowAlert(false);
         answerCallbackQuery.setText(text);
         return answerCallbackQuery;
     }
