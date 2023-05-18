@@ -53,9 +53,8 @@ public class TelegramFacade {
 
     private SendMessage handleInputMessage(Message message) {
         long chatId = message.getChatId();
-        BotState botState;
 
-        botState = caseHandlers.get(message.getText());
+        BotState botState = caseHandlers.get(message.getText());
         if (botState == null) {
             botState = userDataCache.getUsersCurrentBotState(chatId);
         }
