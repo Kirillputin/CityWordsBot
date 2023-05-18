@@ -11,5 +11,7 @@ public enum BotState {
     ASK_END,//Спрашиваем об окончании игры
     ANS_END,//Обрабатываем ответ от пользователя об окончании игры
     FILLING_PROFILE,//Заполнение профиля, начало
-    PROFILE_FILLED //Профиль заполнен
+    PROFILE_FILLED, //Профиль заполнен
+    CANCEL,
+    RULES
 }
