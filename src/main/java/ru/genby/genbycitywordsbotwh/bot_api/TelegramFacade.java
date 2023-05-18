@@ -23,7 +23,6 @@ public class TelegramFacade {
     private final BotStateContext botStateContext;
     private final UserDataCache userDataCache;
     private final ReplyMessagesService messagesService;
-
     private final Map<String, BotState> caseHandlers = new HashMap<>() {{
         put(TextConstants.start, BotState.START);
         put(TextConstants.yesWant, BotState.FILLING_PROFILE);
@@ -32,7 +31,6 @@ public class TelegramFacade {
         put(TextConstants.rules, BotState.RULES);
         put(TextConstants.leaders, BotState.SCOPE);
     }};
-
 
     public BotApiMethod<?> handleUpdate(Update update) {
         SendMessage replyMessage = null;
@@ -63,28 +61,6 @@ public class TelegramFacade {
         if (botState == null) {
             botState = userDataCache.getUsersCurrentBotState(chatId);
         }
-
-//        switch (inputMsg) {
-//            case TextConstants.start:
-//                botState = BotState.START;
-//                break;
-//            case TextConstants.yesWant:
-//                botState = BotState.FILLING_PROFILE;
-//                break;
-//            case TextConstants.noWant:
-//                return messagesService.getReplyMessage(chatId, "reply.cancel");
-//            case TextConstants.endGame:
-//                botState = BotState.END_GAME;
-//                break;
-//            case TextConstants.rules:
-//                return messagesService.getReplyMessage(chatId, "reply.helpText");
-//            case TextConstants.leaders:
-//                botState = BotState.SCOPE;
-//                break;
-//            default:
-//                botState = userDataCache.getUsersCurrentBotState(chatId);
-//                break;
-//        }
 
         userDataCache.setUsersCurrentBotState(chatId, botState);
 
@@ -121,4 +97,24 @@ public class TelegramFacade {
         return answerCallbackQuery;
     }
 }
-
+//        switch (inputMsg) {
+//            case TextConstants.start:
+//                botState = BotState.START;
+//                break;
+//            case TextConstants.yesWant:
+//                botState = BotState.FILLING_PROFILE;
+//                break;
+//            case TextConstants.noWant:
+//                return messagesService.getReplyMessage(chatId, "reply.cancel");
+//            case TextConstants.endGame:
+//                botState = BotState.END_GAME;
+//                break;
+//            case TextConstants.rules:
+//                return messagesService.getReplyMessage(chatId, "reply.helpText");
+//            case TextConstants.leaders:
+//                botState = BotState.SCOPE;
+//                break;
+//            default:
+//                botState = userDataCache.getUsersCurrentBotState(chatId);
+//                break;
+//        }
